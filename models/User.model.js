@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { config } from "../config/index.js";
+import { Roles } from "../utils/constants.js";
 
 const User = new mongoose.Schema(
   {
@@ -12,21 +13,23 @@ const User = new mongoose.Schema(
     isLoggedIn: { type: Boolean, default: false },
     isAccountActive: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
-    role: { type: String, default: false },
+    role: {
+      type: String,
+      default: Roles.User,
+      enum: Object.values(Roles),
+    },
     accessToken: { type: String, default: '' },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true },
 );
 
-User.method('validatePassword', async (password) => {
-  if (await bcrypt.compare(password, this.password)) return;
+User.method('validatePassword', async function(password) {
+  if (await bcrypt.compare(password, this.password)) return true;
   throw new Error('Wrong credentials');
 });
 
-User.method('generateToken', async (payload) => {
-  return jwt.sign(
+User.method('generateAccessToken', async function(payload) {
+  this.accessToken = jwt.sign(
     payload,
     config.JWT_SECRET,
     { 

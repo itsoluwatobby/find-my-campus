@@ -13,6 +13,7 @@ export const typeDefs = `#graphql
     accessToken: String
     role: String
     posts: [Post!]
+    token: Token
     updatedAt: String
     createdAt: String
   }
@@ -46,14 +47,14 @@ export const typeDefs = `#graphql
     register(user: RegistrationMutation!): User
     login(credential: LoginMutation!): User
     updateUser(credential: UpdateUserMutation!): User
-    logout(id: ID!, logout: LogoutMutation): String
-    forgotPassword(credential: ForgotPasswordMutation!): User
-    updatePassword(credential: UpdatePasswordMutation!): User
+    logout(id: ID!): String
+    forgotPassword(email: String!): Token
+    updatePassword(pwdUpdate: UpdatePasswordMutation!): User
 
     # AUTH
     activateAccount(email: String!, activation: ActivateAccountMutation): User
-    deleteToken(email: String!): String
-    createToken(token: CreateTokenMutation!): Token
+    # deleteToken(email: String!): String
+    # createToken(token: CreateTokenMutation!): Token
 
     # POSTS
     createPost(post: CreatePostMutation): Post
@@ -68,11 +69,11 @@ export const typeDefs = `#graphql
     username: String!
   }
 
-  input CreateTokenMutation {
-    email: String!
-    token: String!
-    expiresIn: String!
-  }
+  # input CreateTokenMutation {
+  #   email: String!
+  #   token: String!
+  #   expiresIn: String!
+  # }
   
   input ActivateAccountMutation {
     isAccountActive: Boolean!
@@ -86,16 +87,12 @@ export const typeDefs = `#graphql
     isLoggedIn: Boolean
   }
   
-  input LogoutMutation {
-    accessToken: String
-    isLoggedIn: Boolean
-  }
-
-  type ForgotPasswordMutation {
-    email: String!
-  }
+  # input LogoutMutation {
+  #   accessToken: String
+  #   isLoggedIn: Boolean
+  # }
   
-  type UpdatePasswordMutation {
+  input UpdatePasswordMutation {
     email: String!
     password: String!
     token: String!
