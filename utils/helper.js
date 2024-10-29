@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { inspect } from 'util'
 import { config } from '../config';
+import { Duration } from './constants';
 
 class Helper {
   appName = '[Find-My-Campus] >>>>';
@@ -29,9 +30,16 @@ class Helper {
     )
   }
 
-  generateToken(length, expiresIn) {
+  generateToken(length = 5) {
     const CHARS = '1234567890';
-  
+    let token = '';
+
+    const charLength = CHARS.length;
+    for (let i = 0; i <= length; i++) {
+      const randomIndex = Math.random() * charLength + 1;
+      token += CHARS[randomIndex];
+    }
+    return token;
   }
 }
 export const helper = new Helper();
