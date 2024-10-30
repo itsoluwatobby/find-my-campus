@@ -1,5 +1,6 @@
 
 export const config = {
+  PORT: process.env.PORT,
   DB_URL: process.env.DB_URL,
   // JWT
   ExpiresIn: '30d',

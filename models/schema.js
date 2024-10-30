@@ -22,6 +22,7 @@ export const typeDefs = `#graphql
     email: String!
     token: String!
     expiresIn: String!
+    context: String!
   }
 
   type Post {
@@ -37,7 +38,7 @@ export const typeDefs = `#graphql
   type Query {
     user(id: ID!): User
     users: [User]
-    token(id: ID!): Token
+    # token(id: ID!): Token
     post(id: ID!): Post
     posts: [Post]
   }
@@ -52,9 +53,7 @@ export const typeDefs = `#graphql
     updatePassword(pwdUpdate: UpdatePasswordMutation!): User
 
     # AUTH
-    activateAccount(email: String!, activation: ActivateAccountMutation): User
-    # deleteToken(email: String!): String
-    # createToken(token: CreateTokenMutation!): Token
+    activateAccount(activation: ActivateAccountMutation): User
 
     # POSTS
     createPost(post: CreatePostMutation): Post
@@ -69,14 +68,8 @@ export const typeDefs = `#graphql
     username: String!
   }
 
-  # input CreateTokenMutation {
-  #   email: String!
-  #   token: String!
-  #   expiresIn: String!
-  # }
-  
   input ActivateAccountMutation {
-    isAccountActive: Boolean!
+    email: String!
     token: String!
   }
 
@@ -86,11 +79,6 @@ export const typeDefs = `#graphql
     accessToken: String
     isLoggedIn: Boolean
   }
-  
-  # input LogoutMutation {
-  #   accessToken: String
-  #   isLoggedIn: Boolean
-  # }
   
   input UpdatePasswordMutation {
     email: String!

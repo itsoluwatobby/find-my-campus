@@ -8,7 +8,7 @@ class TokenRepository {
   }
 
   async findTokenByEmail(email) {
-    return TokenModel.findOne(email)
+    return TokenModel.findOne({ email })
   }
 
   async deleteToken(email) {

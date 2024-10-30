@@ -15,3 +15,8 @@ export const Roles = {
   Executive: '1652',
   Admin: '1780',
 };
+
+export const TokenContext = {
+  AccountActivation: 'AccountActivation',
+  PasswordReset: 'PasswordReset',
+}
