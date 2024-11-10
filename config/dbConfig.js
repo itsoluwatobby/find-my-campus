@@ -1,14 +1,14 @@
 import mongoose from "mongoose";
 import { config } from "./index.js";
-import { helper, loggerEnums } from "../utils/index.js";
+import { logger } from "../utils/index.js";
 
 export const ConnectDB = async () => {
   try {
-    helper.logger('DB connection initiated', loggerEnums.info);
+    logger.info('DB connection initiated');
     await mongoose.connect(config.DB_URL);
-    helper.logger('DB connected', loggerEnums.info);
+    logger.info('DB connected');
   } catch (err) {
-    helper.logger(err.message, loggerEnums.error);
+    logger.info(err.message);
     throw new Error(`DB connection error: ${err.message}`);
   }
 }

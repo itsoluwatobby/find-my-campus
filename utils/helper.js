@@ -1,22 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { inspect } from 'util'
 import { config } from '../config/index.js';
 import { Duration } from './constants.js';
 
 class Helper {
-  appName = '[Find-My-Campus] >>>>';
-
-  logger(message, status='log', colors = true) {
-    if (status === 'log')
-      console.log(inspect({ log: `${this.appName} ${message}` }, { colors }));
-    else if (status === 'warn')
-      console.warn(inspect({ log: `${this.appName} ${message}` }, { colors }));
-    else if (status === 'info')
-      console.info(inspect(`${this.appName} ${message}`, { colors }));
-    else
-      console.error(inspect({ log: `${this.appName} ${message}` }, { colors }));
-  }
-
   verifyToken(token) {
     return jwt.verify(
       token,

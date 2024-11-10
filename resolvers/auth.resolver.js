@@ -5,7 +5,6 @@ import {
 } from "../repository/index.js";
 import { helper, TokenContext } from "../utils/index.js";
 
-
 class AuthenticationResolver {
   async register(_, args) {
     const { user } = args;
@@ -92,6 +91,7 @@ class AuthenticationResolver {
 
     user.isAccountActive = true;
     await user.save();
+    await getToken.destroy();
 
     return user;
   }
